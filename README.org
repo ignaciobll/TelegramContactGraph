@@ -1,0 +1,10 @@
+* Telegram Contact Graph
+
+Necesitarás tener instalado ~telegram-cli~. Para que funcione, deberás
+ejecutar el comando ~telegram-cli --json -P 4458~ antes de ejecutar el
+programa con ~python telegram.py~.
+
+El tiempo de ejecución varía según la cantiad de grupos en los que
+estés.
+
+(Fichero ~telegram.db~ requerido) (~touch telegram.db; sqlite3 telegram.db < telegram.sql~)
