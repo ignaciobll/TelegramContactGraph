@@ -7,7 +7,9 @@ conn = sqlite3.connect(DATABASE)
 c = conn.cursor()
 
 sql_get_users = "SELECT peer_id FROM tg_user"
+sql_get_users_n_name = "SELECT peer_id,first_name FROM tg_user"
 sql_get_chats = "SELECT peer_id, title FROM tg_chat"
+sql_get_chats_n_title = "SELECT peer_id,title title FROM tg_chat"
 sql_get_user_first_name = "SELECT first_name FROM tg_user WHERE peer_id=? LIMIT 1"
 sql_get_peer_id_by_username = "SELECT peer_id FROM tg_user WHERE username=?"
 sql_get_peer_id_by_first_and_last_name ="SELECT peer_id FROM tg_user WHERE first_name=? AND last_name=?"
@@ -26,8 +28,18 @@ def get_users():
     users = c.fetchall()
     return list(map(lambda x: x[0], users))
 
+def get_users_n_names():
+    c.execute(sql_get_users_n_name)
+    users = c.fetchall()
+    return users
+
 def get_groups():
     c.execute(sql_get_chats)
+    groups = c.fetchall()
+    return groups
+
+def get_groups_n_title():
+    c.execute(sql_get_chats_n_title)
     groups = c.fetchall()
     return groups
 
