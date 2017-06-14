@@ -46,7 +46,7 @@ def channel_get_members(name,timeout=5):
 
 j_dialog = json.loads(json.dumps(dialog_list()))
 
-sql_add_user = "INSERT INTO tg_user (peer_id, print_name, first_name, last_name, username) VALUES (?,?,?,?,?)"
+sql_add_user = "INSERT OR IGNORE INTO tg_user (peer_id, print_name, first_name, last_name, username) VALUES (?,?,?,?,?) "
 sql_add_chat = "INSERT INTO tg_chat (peer_id, print_name, title) VALUES (?,?,?)"
 sql_relation_user_char = "INSERT INTO tg_user_tg_chat (id, tg_user_peer_id, tg_chat_peer_id) VALUES (?,?,?)"
 
@@ -79,6 +79,7 @@ def add_members(entry):
         if 'members' in info.keys():
             members = info['members']
     for m in range(0,len(members)):
+        add_user(members[m])
         chat_id, chat_id, member_id = 0,0,0
         chat_id, member_id = entry['peer_id'], members[m]['peer_id']
         table_id = chat_id*(100000000) +  member_id # 10 ^ 8
