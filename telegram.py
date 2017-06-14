@@ -26,7 +26,7 @@ def chat_info(name,timeout=10):
             print("NOOOOOO, it was impossible to get the info of {}...".format(name))
             return {}
         return sender.chat_info(name)
-    except Exception:
+    except Exception as err:
         print("Wooops, chat_info failed. Just {} more times...".format(timeout))
         time.sleep(1)
         return chat_info(name,timeout-1)
@@ -38,9 +38,13 @@ def channel_get_members(name,timeout=5):
             print("Maybe it's because YOU HAVE NO POWER HERE. Tsss. Evil.")
             return []
         return sender.channel_get_members(name,LIMIT)
-    except Exception:
+    except Exception as err:
         print("Wooops, channel_get_members failed. Just {} more times...".format(timeout))
+        potorro = err.args
         time.sleep(1)
+        if "CHAT_ADMIN_REQUIRED" in potorro[0]:
+            print("YOU HAVE NO POWER HERE. Tsss. Evil. NotAnAdmin")
+            return []
         return channel_get_members(name,timeout-1)
 
 
