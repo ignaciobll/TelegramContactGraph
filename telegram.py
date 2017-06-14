@@ -3,6 +3,7 @@ import time
 from pytg.sender import Sender
 
 DATABASE = 'telegram.db'
+LIMIT = 10000
 
 conn = sqlite3.connect(DATABASE)
 c = conn.cursor()
@@ -13,7 +14,7 @@ print("Let's request about your dialog...")
 
 def dialog_list(timeout=20):
     try:
-        return sender.dialog_list(10000)
+        return sender.dialog_list(LIMIT)
     except Exception:
         print("Wooops, dialog_list failed. Just {} more times...".format(timeout))
         time.sleep(1)
@@ -36,7 +37,7 @@ def channel_get_members(name,timeout=5):
             print("NOOOOOO, it was impossible to get the info of {}...".format(name))
             print("Maybe it's because YOU HAVE NO POWER HERE. Tsss. Evil.")
             return []
-        return sender.channel_get_members(name)
+        return sender.channel_get_members(name,LIMIT)
     except Exception:
         print("Wooops, channel_get_members failed. Just {} more times...".format(timeout))
         time.sleep(1)
