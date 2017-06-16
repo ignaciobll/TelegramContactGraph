@@ -17,11 +17,11 @@ sql_get_peer_id_by_first_name = "SELECT peer_id FROM tg_user WHERE first_name=?"
 sql_get_peer_id_by_last_name = "SELECT peer_id FROM tg_user WHERE last_name=?"
 sql_get_groups_of_user="SELECT tg_chat_peer_id FROM tg_user_tg_chat WHERE tg_user_peer_id=?"
 sql_get_groups_in_common="""
-SELECT tg_chat_peer_id FROM tg_user_tg_chat WHERE tg_user_peer_id=?
+SELECT DISTINCT tg_chat_peer_id FROM tg_user_tg_chat WHERE tg_user_peer_id=?
 INTERSECT
-SELECT tg_chat_peer_id FROM tg_user_tg_chat WHERE tg_user_peer_id=?
+SELECT DISTINCT tg_chat_peer_id FROM tg_user_tg_chat WHERE tg_user_peer_id=?
 """
-
+sql_get_group_title = "SELECT title FROM tg_chat WHERE peer_id=?"
 
 def get_users():
     c.execute(sql_get_users)
@@ -35,6 +35,11 @@ def get_users_n_names():
 
 def get_groups():
     c.execute(sql_get_chats)
+    groups = c.fetchall()
+    return groups
+
+def get_group_title(peer_id):
+    c.execute(sql_get_group_title,(peer_id,))
     groups = c.fetchall()
     return groups
 
